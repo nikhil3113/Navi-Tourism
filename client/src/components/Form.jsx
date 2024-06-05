@@ -15,7 +15,7 @@ const Form = ({ handleSubmit, tag = "", initialData={} }) => {
     if(!token){
       navigate("/");
     }
-    axios.get(`http://localhost:5000/${id}`)
+    axios.get(`https://navi-tourism-backend.vercel.app/${id}`)
           .then((response) =>{
             setName(response.data.city.name)
             setDescription(response.data.city.description)
@@ -36,7 +36,7 @@ const Form = ({ handleSubmit, tag = "", initialData={} }) => {
   return (
     <>
       <div className="flex flex-col justify-center items-center mt-32">
-        <h1 className="text-4xl font-bold mb-5">{tag == "add"? "Add" : "Update"}</h1>
+        <h1 className="text-4xl font-bold mb-5">{tag == "add"? "Add" : "Update"} City</h1>
         <form onSubmit={onSubmit} className="border-slate-500 border-2 w-2/5 xl:w-2/6 p-5 rounded-lg">
           <div className="flex flex-col my-5">
             <label htmlFor="name" className="font-semibold mb-2">Name</label>

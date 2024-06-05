@@ -17,9 +17,9 @@ const AddCity = () => {
 
   const handleSubmit = (formData) => {
     axios
-      .post("http://localhost:5000/add", formData)
+      .post("https://navi-tourism-backend.vercel.app/add", formData)
       .then(() => {
-        navigate("/");
+        alert("Added City");
       })
       .catch((error) => {
         console.log(error);

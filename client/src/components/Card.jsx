@@ -55,7 +55,7 @@ const Card = ({ name, description, route, buttonName, updateRoute, handleDelete 
 
               {token ? (
                 <div className="flex">
-                  <Link onClick={() => handleDelete}>
+                  <Link onClick={handleDelete}>
                     <MdOutlineDelete className="text-[28px] text-red-500 dark:text-red-800" />
                   </Link>
                   <Link to={updateRoute} className="mx-5">

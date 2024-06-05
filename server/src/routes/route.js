@@ -19,6 +19,8 @@ router.post('/location/add', locationController.createLocation)
 router.get('/location/:id', locationController.getLocation) //!id = cityId
 router.get('/locationDetails/:id', locationController.getLocationDetails)
 router.put('/location/update/:id', locationController.updateLocation)
+router.delete('/location/delete/:id', locationController.deleteLocation )
+router.get('/city/:id/locationCount', locationController.getLocationCountForCity)
 
 //user
 router.post('/signup', authController.signup)

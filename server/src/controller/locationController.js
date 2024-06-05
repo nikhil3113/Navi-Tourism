@@ -93,7 +93,7 @@ const locationController = {
     updateLocation: async (req, res) => {
         try {
 
-            const { name, description, exactLocation, distFromStn, longitude, latitude,iframe } = req.body;
+            const { name, description, exactLocation, distFromStn, longitude, latitude, iframe } = req.body;
             if (!name, !description, !exactLocation) {
                 return res.status(400).json({ msg: "Please fill all fields" })
             }
@@ -115,6 +115,36 @@ const locationController = {
                 }
             })
             res.status(200).json({ location })
+        } catch (error) {
+            res.status(500).json({ "Internal server error": error })
+            console.log(error)
+        }
+    },
+
+    deleteLocation: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const location = await prisma.location.delete({
+                where: {
+                    id: id
+                }
+            })
+            res.status(200).json({ location })
+        } catch (error) {
+            res.status(500).json({ "Internal server error": error })
+            console.log(error)
+        }
+    },
+
+    getLocationCountForCity: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const count = await prisma.location.count({
+                where: {
+                    cityId: id
+                }
+            })
+            res.status(200).json({ count })
         } catch (error) {
             res.status(500).json({ "Internal server error": error })
             console.log(error)

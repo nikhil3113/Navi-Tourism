@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdModeEditOutline } from "react-icons/md";
-
+import { MdOutlineDelete } from "react-icons/md";
 
 const LocationDetail = () => {
   const { id } = useParams();
@@ -18,11 +18,12 @@ const LocationDetail = () => {
 
   const { darkMode } = useDarkMode();
   const token = localStorage.getItem("LocalPreference");
+  const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/locationDetails/${id}`)
+      .get(`https://navi-tourism-backend.vercel.app/locationDetails/${id}`)
       .then((response) => {
-        // console.log(response.data)
+        console.log(response.data);
         setName(response.data.location.name);
         setDescription(response.data.location.description);
         setExactLocation(response.data.location.exactLocation);
@@ -37,22 +38,42 @@ const LocationDetail = () => {
       });
   }, [id]);
 
+  const handleDelete = () => {
+    axios
+      .delete(`http://localhost:5000/location/delete/${id}`)
+      .then(() => {
+        navigate(-1);
+      })
+      .catch((error) => {
+        alert("An Error occured");
+        console.log(error);
+      });
+  };
+
   return (
     <div className={`${darkMode && "dark"}`}>
       <div className="dark:bg-gray-800 h-full">
         <NavBar />
+        
+        <div className="text-center dark:text-white mt-[40px] mb-[40px]">
+          <h1 className="text-5xl font-bold text-gray-800 dark:text-white">
+            {name}
+          </h1>
+        </div>
+
         {token ? (
           <div className="flex justify-end items-start xl:mr-44 md:mr-44 mr-10">
             <Link to={`/location/update/${id}`} className="flex">
-              <span className="text-3xl dark:text-white font-semibold mr-2">Update</span><MdModeEditOutline className="text-4xl text-green-300 dark:text-green-500" />
+              <MdModeEditOutline className="text-4xl text-green-400 dark:text-green-500 mx-5" />
             </Link>
+
+            <div className="flex flex-row" onClick={() => handleDelete()}>
+              <MdOutlineDelete className="text-4xl text-red-500 dark:text-red-800" />
+            </div>
           </div>
         ) : (
           ""
         )}
-        <div className="text-center dark:text-white mt-[40px] mb-[40px]">
-          <h1 className="text-5xl font-bold text-gray-800 dark:text-white">{name}</h1>
-        </div>
 
         <div className=" flex flex-col justify-center sm:items-center">
           <div className="flex flex-col xl:flex-row justify-center items-center mt-10 sm:px-8 px-5 py-10 dark:text-white bg-gradient-to-r from-gray-50 to-gray-200 my-5 xl:w-11/12 md:w-11/12 rounded-lg xl:dark:shadow-none  dark:shadow-lg dark:from-gray-700 dark:to-gray-800 ">

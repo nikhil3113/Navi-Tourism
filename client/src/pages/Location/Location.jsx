@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Card from "../../components/Card";
 import NavBar from "../../components/NavBar";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 
-
 const Location = () => {
   const { id } = useParams();
   const token = localStorage.getItem("LocalPreference");
   const [location, setLocation] = useState([]);
   const { darkMode } = useDarkMode();
+  const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/location/${id}`)
+      .get(`https://navi-tourism-backend.vercel.app/location/${id}`)
       .then((response) => {
         setLocation(response.data.locations);
         console.log(response.data.locations);
@@ -27,12 +27,16 @@ const Location = () => {
   return (
     <>
       <div className={`${darkMode && "dark"}`}>
-        <div className="dark:bg-gray-800 h-full xl:h-screen md:h-screen">
+        <div className="dark:bg-gray-800 h-screen xl:h-screen md:h-screen">
           <NavBar />
           {token ? (
             <div className="flex justify-end items-start xl:mr-44 md:mr-44 mr-20">
               <Link to={`/location/add/${id}`} className="flex">
-              <span className="text-3xl mr-2 font-semibold dark:text-white"> Add </span><MdOutlineAddToPhotos className="text-4xl text-red-500 dark:text-red-700" />
+                <span className="text-3xl mr-2 font-semibold dark:text-white">
+                  {" "}
+                  Add{" "}
+                </span>
+                <MdOutlineAddToPhotos className="text-4xl text-red-500 dark:text-red-700" />
               </Link>
             </div>
           ) : (

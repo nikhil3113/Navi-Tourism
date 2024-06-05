@@ -14,7 +14,7 @@ const City = () => {
   const token = localStorage.getItem("LocalPreference");
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/`)
+      .get(`https://navi-tourism-backend.vercel.app/`)
       .then((response) => {
         setCity(response.data.city);
         // console.log(response.data);
@@ -26,16 +26,25 @@ const City = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        navigate("/home");
+      .get(`http://localhost:5000/city/${id}/locationCount`)
+      .then((response) => {
+        if (response.data.count === 0) {
+          axios
+            .delete(`http://localhost:5000/delete/${id}`)
+            .then(() => {
+              window.location.reload()
+            })
+            .catch((error) => {
+              alert("error occured");
+              console.log(error);
+            });
+        } else {
+          alert("Please delete all location first");
+          // console.log("Please delete all location first")
+        }
       })
       .catch((error) => {
-        alert("An Error occured");
+        // alert("Error occured while checking location");      
         console.log(error);
       });
   };
@@ -70,7 +79,7 @@ const City = () => {
                       route={`/location/${item.id}`}
                       buttonName="Visit"
                       updateRoute={`/city/update/${item.id}`}
-                      handleDelete={""}
+                      handleDelete={() => handleDelete(item.id)}
                     />
                   </div>
                 ))
