@@ -44,7 +44,7 @@ const LocationForm = ({ handleSubmit, tag = "", initialData={} }) => {
     <>
       <div className="flex flex-col justify-center items-center mt-20">
         <h1 className="text-4xl font-bold mb-5">{tag == "add"? "Add" : "Update"} Location</h1>
-        <form onSubmit={onSubmit} className="border-slate-500 border-2 w-2/5 xl:w-2/6 p-5 rounded-lg">
+        <form onSubmit={onSubmit} className="border-slate-500 border-2 w-[80%] sm:w-2/6 p-5 rounded-lg">
           <div className="flex flex-col my-5">
             <label htmlFor="name" className="font-semibold mb-2">Name</label>
             <input required type="text" placeholder="Enter Name" value={name} onChange={(e) => setName(e.target.value)} className="border border-gray-300 bg-slate-200 p-2 rounded-lg focus:outline focus:ring-blue-700 focus:border-blue-700" />

@@ -13,7 +13,7 @@ const UpdateLocation = () => {
 
   const handleSubmit = (formData) => {
     axios
-      .put(`http://localhost:5000/location/update/${id}`, formData)
+      .put(`https://navi-tourism-backend.vercel.app/location/update/${id}`, formData)
       .then(() => {
         alert("data updated");
       })

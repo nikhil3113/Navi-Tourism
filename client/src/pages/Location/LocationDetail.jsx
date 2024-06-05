@@ -12,8 +12,6 @@ const LocationDetail = () => {
   const [description, setDescription] = useState("");
   const [exactLocation, setExactLocation] = useState("");
   const [distFromStn, setDistFromStn] = useState("");
-  // const [longitude, setLongitude] = useState("");
-  // const [latitude, setLatitude] = useState("");
   const [iframe, setIframe] = useState("");
 
   const { darkMode } = useDarkMode();
@@ -23,15 +21,13 @@ const LocationDetail = () => {
     axios
       .get(`https://navi-tourism-backend.vercel.app/locationDetails/${id}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setName(response.data.location.name);
         setDescription(response.data.location.description);
         setExactLocation(response.data.location.exactLocation);
         setDistFromStn(response.data.location.distFromStn);
-        // setLongitude(response.data.location.longitude);
-        // setLatitude(response.data.location.latitude);
         setIframe(response.data.location.iframe);
-        console.log(response.data.location);
+        // console.log(response.data.location);
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +36,7 @@ const LocationDetail = () => {
 
   const handleDelete = () => {
     axios
-      .delete(`http://localhost:5000/location/delete/${id}`)
+      .delete(`https://navi-tourism-backend.vercel.app/location/delete/${id}`)
       .then(() => {
         navigate(-1);
       })
@@ -54,9 +50,9 @@ const LocationDetail = () => {
     <div className={`${darkMode && "dark"}`}>
       <div className="dark:bg-gray-800 h-full">
         <NavBar />
-        
+
         <div className="text-center dark:text-white mt-[40px] mb-[40px]">
-          <h1 className="text-5xl font-bold text-gray-800 dark:text-white">
+          <h1 className="xl:text-5xl text-[34px] md:text-[40px] font-bold text-gray-800 dark:text-white">
             {name}
           </h1>
         </div>
@@ -90,10 +86,6 @@ const LocationDetail = () => {
                   <span className="font-bold">{distFromStn}KM</span>
                 </p>
               </div>
-              {/* <div className=" my-5">
-                <p className="text-xl ">{longitude}</p>
-                <p className="text-xl ">{latitude}</p>
-              </div> */}
             </div>
 
             <div className="w-2/5 sm:w-full flex justify-center items-center">

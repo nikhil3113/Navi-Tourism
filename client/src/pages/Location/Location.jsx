@@ -11,7 +11,7 @@ const Location = () => {
   const token = localStorage.getItem("LocalPreference");
   const [location, setLocation] = useState([]);
   const { darkMode } = useDarkMode();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`https://navi-tourism-backend.vercel.app/location/${id}`)
@@ -53,6 +53,7 @@ const Location = () => {
                       buttonName="Visit"
                       route={`/locationDetail/${item.id}`}
                       updateRoute={`/location/update/${item.id}`}
+                      DeleteButtonVisiblity={"hidden"}
                     />
                   </div>
                 ))

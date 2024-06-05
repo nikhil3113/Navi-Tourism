@@ -3,7 +3,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 
-const Card = ({ name, description, route, buttonName, updateRoute, handleDelete }) => {
+const Card = ({ name, description, route, buttonName, updateRoute, handleDelete, DeleteButtonVisiblity }) => {
   const token = localStorage.getItem("LocalPreference");
 
   const truncateText = (text, maxLength) => {
@@ -56,7 +56,7 @@ const Card = ({ name, description, route, buttonName, updateRoute, handleDelete 
               {token ? (
                 <div className="flex">
                   <Link onClick={handleDelete}>
-                    <MdOutlineDelete className="text-[28px] text-red-500 dark:text-red-800" />
+                    <MdOutlineDelete className={`text-[28px] text-red-500 dark:text-red-800 ${DeleteButtonVisiblity}`} />
                   </Link>
                   <Link to={updateRoute} className="mx-5">
                     <FaRegEdit className="text-[26px] text-green-400 dark:text-green-800" />

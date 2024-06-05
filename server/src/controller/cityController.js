@@ -46,7 +46,8 @@ const cityController = {
                     locations:true
                 }
             });
-            res.status(200).json({city})
+            const citiesCount = city.length;
+            res.status(200).json({city, count: citiesCount})
         } catch (error) {
             res.status(500).json({ "Internal server error": error })
         }
