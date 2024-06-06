@@ -5,22 +5,26 @@ import Card from "../../components/Card";
 import NavBar from "../../components/NavBar";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdOutlineAddToPhotos } from "react-icons/md";
+import CardLoader from "../../components/CardLoader";
 
 const Location = () => {
   const { id } = useParams();
   const token = localStorage.getItem("LocalPreference");
   const [location, setLocation] = useState([]);
   const { darkMode } = useDarkMode();
+  const[loading, setLoading] = useState(true);
   // const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`https://navi-tourism-backend.vercel.app/location/${id}`)
       .then((response) => {
         setLocation(response.data.locations);
+        setLoading(false);
         console.log(response.data.locations);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, [id]);
 
@@ -29,10 +33,13 @@ const Location = () => {
       <div className={`${darkMode && "dark"}`}>
         <div className="dark:bg-gray-800 h-screen xl:h-screen md:h-screen">
           <NavBar />
+          <div className="text-center text-5xl dark:text-white font-extrabold text-gray-800 ">
+            <h1>Location&apos;s To Visit</h1>
+          </div>
           {token ? (
             <div className="flex justify-end items-start xl:mr-44 md:mr-44 mr-20">
               <Link to={`/location/add/${id}`} className="flex">
-                <span className="text-3xl mr-2 font-semibold dark:text-white">
+                <span className="text-3xl mr-2  dark:text-white font-extrabold">
                   {" "}
                   Add{" "}
                 </span>
@@ -44,7 +51,13 @@ const Location = () => {
           )}
           <div className="flex justify-center items-center">
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 px-3 h-52">
-              {location && location.length > 0 ? (
+              {loading? (
+                 <>
+                 {Array.from({ length: 6 }).map((_, index) => (
+                   <CardLoader key={index} />
+                 ))}
+               </>
+              ) : location && location.length > 0 ? (
                 location.map((item) => (
                   <div key={item.id}>
                     <Card

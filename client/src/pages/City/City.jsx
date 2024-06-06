@@ -12,7 +12,7 @@ const City = () => {
   const { darkMode } = useDarkMode();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [cityCount, setCityCount] = useState(1);
+  const [cityCount, setCityCount] = useState(0);
 
   const token = localStorage.getItem("LocalPreference");
   useEffect(() => {
@@ -21,7 +21,7 @@ const City = () => {
       // .get('http://localhost:5000/')
       .then((response) => {
         setCity(response.data.city);
-        setCityCount(response.data.count);
+        setCityCount(response.data.city.length);
         setLoading(false);
         console.log(response.data);
       })
@@ -62,6 +62,9 @@ const City = () => {
         <div className=" dark:bg-gray-800 h-screen xl:h-screen md:h-screen">
           {/* h-full */}
           <NavBar />
+          <div className="text-center text-5xl dark:text-white font-extrabold text-gray-800">
+            <h1>City&apos;s</h1>
+          </div>
           {token ? (
             <div className="flex justify-end items-start xl:mr-44 md:mr-44 mr-20">
               <Link to="/city/add" className="flex">
@@ -75,15 +78,15 @@ const City = () => {
           ) : (
             ""
           )}
-          
+
           <div className="flex justify-center items-center">
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 px-3">
               {loading ? (
-                <div className="w-full flex justify-around items-center">
-                  {Array.from({ length: cityCount }).map((_, index) => (
+                <>
+                  {Array.from({ length: 6 }).map((_, index) => (
                     <CardLoader key={index} />
                   ))}
-                </div>
+                </>
               ) : city && city.length > 0 ? (
                 city.map((item) => (
                   <div key={item.id}>
