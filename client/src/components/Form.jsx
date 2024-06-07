@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { ShimmerBadge, ShimmerButton } from "react-shimmer-effects";
+import {
+  ShimmerBadge,
+  ShimmerButton,
+  ShimmerPostItem,
+} from "react-shimmer-effects";
 
 const Form = ({ handleSubmit, tag = "", initialData = {} }) => {
   const [name, setName] = useState(initialData.name || "");
@@ -42,65 +46,73 @@ const Form = ({ handleSubmit, tag = "", initialData = {} }) => {
         <h1 className="text-4xl font-bold mb-5">
           {tag == "add" ? "Add" : "Update"} City
         </h1>
-        <form
-          onSubmit={onSubmit}
-          className="border-slate-500 border-2 w-[80%] sm:w-2/6 p-5 rounded-lg"
-        >
-          <div className="flex flex-col my-5">
-            {loading ? (
-              <>
-                <ShimmerBadge width={450} />
-              </>
-            ) : (
-              <>
-                <label htmlFor="name" className="font-semibold mb-2">
-                  Name
-                </label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Enter Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="border border-gray-300 bg-slate-200 p-2 rounded-lg focus:outline focus:ring-blue-700 focus:border-blue-700"
-                />
-              </>
-            )}
-          </div>
+        {loading ? (
+          <>
+            <div className="w-[80%] xl:w-2/5 md:w-2/5 mt-20">
+              <ShimmerPostItem card title cta imageType="none" imageHeight={200} />
+            </div>
+          </> 
+        ) : (
+          <form
+            onSubmit={onSubmit}
+            className="border-slate-500 border-2 w-[80%] sm:w-2/6 p-5 rounded-lg"
+          >
+            <div className="flex flex-col my-5">
+              {loading ? (
+                <>
+                  <ShimmerBadge />
+                </>
+              ) : (
+                <>
+                  <label htmlFor="name" className="font-semibold mb-2">
+                    Name
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Enter Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="border border-gray-300 bg-slate-200 p-2 rounded-lg focus:outline focus:ring-blue-700 focus:border-blue-700"
+                  />
+                </>
+              )}
+            </div>
 
-          <div className="flex flex-col my-5">
+            <div className="flex flex-col my-5">
+              {loading ? (
+                <>
+                  <ShimmerBadge height={500} />
+                </>
+              ) : (
+                <>
+                  <label htmlFor="description" className="font-semibold mb-2">
+                    Description
+                  </label>
+                  <textarea
+                    required
+                    name="description"
+                    placeholder="Enter Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    rows={4}
+                    cols={40}
+                    className="border border-gray-300 bg-slate-200 p-2 rounded-lg focus:outline focus:ring-blue-700 focus:border-blue-700"
+                  ></textarea>
+                </>
+              )}
+            </div>
             {loading ? (
               <>
-                <ShimmerBadge width={450} height={500} />
+                <ShimmerButton size="lg" />
               </>
             ) : (
-              <>
-                <label htmlFor="description" className="font-semibold mb-2">
-                  Description
-                </label>
-                <textarea
-                  required
-                  name="description"
-                  placeholder="Enter Description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  rows={4}
-                  cols={40}
-                  className="border border-gray-300 bg-slate-200 p-2 rounded-lg focus:outline focus:ring-blue-700 focus:border-blue-700"
-                ></textarea>
-              </>
+              <button className="bg-blue-700 p-2 rounded-lg text-white font-semibold w-full hover:opacity-80 cursor-pointer">
+                {tag == "add" ? "Add" : "Update"}
+              </button>
             )}
-          </div>
-          {loading ? (
-            <>
-              <ShimmerButton size="lg" />
-            </>
-          ) : (
-            <button className="bg-blue-700 p-2 rounded-lg text-white font-semibold w-full hover:opacity-80 cursor-pointer">
-              {tag == "add" ? "Add" : "Update"}
-            </button>
-          )}
-        </form>
+          </form>
+        )}
       </div>
     </>
   );

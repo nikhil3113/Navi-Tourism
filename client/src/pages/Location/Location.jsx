@@ -5,7 +5,6 @@ import Card from "../../components/Card";
 import NavBar from "../../components/NavBar";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdOutlineAddToPhotos } from "react-icons/md";
-import CardLoader from "../../components/CardLoader";
 import { ShimmerPostItem } from "react-shimmer-effects";
 
 const Location = () => {
@@ -13,7 +12,7 @@ const Location = () => {
   const token = localStorage.getItem("LocalPreference");
   const [location, setLocation] = useState([]);
   const { darkMode } = useDarkMode();
-  const[loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   // const navigate = useNavigate();
   useEffect(() => {
     axios
@@ -52,12 +51,12 @@ const Location = () => {
           )}
           <div className="flex justify-center items-center">
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 px-3 h-52">
-              {loading? (
-                 <>
-                 {Array.from({ length: 6 }).map((_, index) => (
-                  <>
+              {loading ? (
+                <>
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <>
                       <div className="gap-10 mt-10 ">
-                        <div className="sm:w-96 w-80">
+                        <div className=" w-80">
                           <ShimmerPostItem
                             card
                             title
@@ -71,8 +70,8 @@ const Location = () => {
                         </div>
                       </div>
                     </>
-                 ))}
-               </>
+                  ))}
+                </>
               ) : location && location.length > 0 ? (
                 location.map((item) => (
                   <div key={item.id}>

@@ -5,8 +5,7 @@ import NavBar from "../../components/NavBar";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdModeEditOutline } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
-import DetailsLoader from "../../components/DetailsLoader";
-import { ShimmerTitle } from "react-shimmer-effects";
+import { ShimmerTitle, ShimmerPostDetails } from "react-shimmer-effects";
 
 const LocationDetail = () => {
   const { id } = useParams();
@@ -58,8 +57,8 @@ const LocationDetail = () => {
 
         {loading ? (
           <>
-          <div className="w-2/5 text-center m-auto dark:hidden">
-            <ShimmerTitle line={1} />
+            <div className="w-2/5 text-center m-auto dark:hidden">
+              <ShimmerTitle line={1} />
             </div>
           </>
         ) : (
@@ -86,7 +85,11 @@ const LocationDetail = () => {
 
         {loading ? (
           <div>
-            <DetailsLoader />
+            <>
+              <div className=" mt-20 px-32 flex justify-center items-center w-full">
+                <ShimmerPostDetails card cta variant="SIMPLE" />
+              </div>
+            </>
           </div>
         ) : (
           <div className=" flex flex-col justify-center sm:items-center">

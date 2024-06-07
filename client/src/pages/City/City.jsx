@@ -5,7 +5,6 @@ import NavBar from "../../components/NavBar";
 import { Link, useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdOutlineAddToPhotos } from "react-icons/md";
-import CardLoader from "../../components/CardLoader";
 import { ShimmerPostItem } from "react-shimmer-effects";
 
 const City = () => {
@@ -88,7 +87,7 @@ const City = () => {
                     // <CardLoader key={index} />
                     <>
                       <div className="gap-10 mt-10 ">
-                        <div className="sm:w-96 w-80">
+                        <div className=" w-[350px]">
                           <ShimmerPostItem
                             card
                             title
