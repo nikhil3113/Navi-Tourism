@@ -56,7 +56,7 @@ const Location = () => {
                   {Array.from({ length: 6 }).map((_, index) => (
                     <>
                       <div className="gap-10 mt-10 ">
-                        <div className=" w-80">
+                        <div className=" w-[350px]">
                           <ShimmerPostItem
                             card
                             title
