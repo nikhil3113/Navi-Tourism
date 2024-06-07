@@ -20,6 +20,7 @@ const AddCity = () => {
       .post("https://navi-tourism-backend.vercel.app/add", formData)
       .then(() => {
         alert("Added City");
+        navigate(-1);
       })
       .catch((error) => {
         console.log(error);

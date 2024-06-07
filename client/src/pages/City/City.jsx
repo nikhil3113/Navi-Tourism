@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CardLoader from "../../components/CardLoader";
+import { ShimmerPostItem } from "react-shimmer-effects";
 
 const City = () => {
   const [city, setCity] = useState([]);
@@ -59,7 +60,7 @@ const City = () => {
   return (
     <>
       <div className={`${darkMode && "dark"}`}>
-        <div className=" dark:bg-gray-800 h-screen xl:h-screen md:h-screen">
+        <div className=" dark:bg-gray-800 min-h-screen">
           {/* h-full */}
           <NavBar />
           <div className="text-center text-5xl dark:text-white font-extrabold text-gray-800">
@@ -84,7 +85,23 @@ const City = () => {
               {loading ? (
                 <>
                   {Array.from({ length: 6 }).map((_, index) => (
-                    <CardLoader key={index} />
+                    // <CardLoader key={index} />
+                    <>
+                      <div className="gap-10 mt-10 ">
+                        <div className="sm:w-96 w-80">
+                          <ShimmerPostItem
+                            card
+                            title
+                            cta
+                            imageType="thumbnail"
+                            imageWidth={200}
+                            imageHeight={5}
+                            contentCenter
+                            key={index}
+                          />
+                        </div>
+                      </div>
+                    </>
                   ))}
                 </>
               ) : city && city.length > 0 ? (

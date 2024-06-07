@@ -6,6 +6,7 @@ import NavBar from "../../components/NavBar";
 import { useDarkMode } from "../../DarkModeContext";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CardLoader from "../../components/CardLoader";
+import { ShimmerPostItem } from "react-shimmer-effects";
 
 const Location = () => {
   const { id } = useParams();
@@ -31,9 +32,9 @@ const Location = () => {
   return (
     <>
       <div className={`${darkMode && "dark"}`}>
-        <div className="dark:bg-gray-800 h-screen xl:h-screen md:h-screen">
+        <div className="dark:bg-gray-800 min-h-screen">
           <NavBar />
-          <div className="text-center text-5xl dark:text-white font-extrabold text-gray-800 ">
+          <div className="text-center text-5xl dark:text-white font-extrabold text-gray-800 mb-10 mt-10">
             <h1>Location&apos;s To Visit</h1>
           </div>
           {token ? (
@@ -54,7 +55,22 @@ const Location = () => {
               {loading? (
                  <>
                  {Array.from({ length: 6 }).map((_, index) => (
-                   <CardLoader key={index} />
+                  <>
+                      <div className="gap-10 mt-10 ">
+                        <div className="sm:w-96 w-80">
+                          <ShimmerPostItem
+                            card
+                            title
+                            cta
+                            imageType="thumbnail"
+                            imageWidth={200}
+                            imageHeight={5}
+                            contentCenter
+                            key={index}
+                          />
+                        </div>
+                      </div>
+                    </>
                  ))}
                </>
               ) : location && location.length > 0 ? (

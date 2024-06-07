@@ -53,7 +53,7 @@ const LocationDetail = () => {
 
   return (
     <div className={`${darkMode && "dark"}`}>
-      <div className="dark:bg-gray-800 h-full">
+      <div className="dark:bg-gray-800 min-h-screen">
         <NavBar />
 
         {loading ? (
