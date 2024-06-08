@@ -117,7 +117,9 @@ const City = () => {
                   </div>
                 ))
               ) : (
-                <p>No cities found.</p>
+                <div className="mt-20 text-4xl dark:text-white text-gray-800">
+                  <p>No cities found.</p>
+                </div>
               )}
             </div>
           </div>

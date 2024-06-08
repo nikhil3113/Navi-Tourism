@@ -22,11 +22,11 @@ const Home = () => {
 
   return (
     <>
-      <div className={`${darkMode && "dark"}`}>
-        <div className="dark:bg-gray-800 h-full ">
+      <div className={`${darkMode && "dark"} flex flex-col min-h-screen` }>
+        <div className="dark:bg-gray-800 flex flex-col flex-grow">
           <NavBar />
           <div className="flex flex-col my-8">
-            <div className="flex flex-col justify-center items-center mb-20">
+            <div className="flex flex-col justify-center items-center">
               <h1 className="text-6xl font-extrabold text-center dark:text-white">
                 Navi <br /> Tourism
               </h1>
@@ -56,7 +56,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex xl:flex-row md:flex-row flex-col justify-evenly items-center dark:text-white  ">
+            <div className="flex xl:flex-row md:flex-row flex-col justify-evenly items-center dark:text-white mt-10 ">
               <div className="sm:w-[40%] w-[80%] sm:mb-0 mb-10">
                 <h1 className="text-4xl font-bold mb-5">About Us</h1>
                 <p className="text-lg">
@@ -110,7 +110,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex xl:flex-row md:flex-row flex-col justify-evenly items-center mt-20 dark:text-white">
+            <div className="flex xl:flex-row md:flex-row flex-col justify-evenly items-center mt-20 dark:text-white ">
               <div className="sm:w-[40%] w-[80%] sm:mb-0 mb-10">
                 <h1 className="text-4xl font-bold mb-5">Our Mission</h1>
                 <p className="text-lg">

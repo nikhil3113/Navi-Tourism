@@ -86,7 +86,7 @@ const Location = () => {
                   </div>
                 ))
               ) : (
-                <p>No Location found.</p>
+                <p className="text-center text-4xl ml-20 font-bold dark:text-white mt-20">No Location found :(</p>
               )}
             </div>
           </div>
