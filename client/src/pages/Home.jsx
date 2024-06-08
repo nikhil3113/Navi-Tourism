@@ -40,7 +40,7 @@ const Home = () => {
                 {token ? (
                   <>
                     <button
-                      className= " cursor-pointer mt-10 mx-5 inline-flex items-center px-3 py-2 text-[16px] font-semibold text-center dark:text-black text-white bg-blue-700 rounded-lg hover:bg-blue-800 hover:dark:bg-gray-500 focus:ring-4 focus:outline-none  dark:bg-[#b5b9be]"
+                      className=" cursor-pointer mt-10 mx-5 inline-flex items-center px-3 py-2 text-[16px] font-semibold text-center dark:text-black text-white bg-blue-700 rounded-lg hover:bg-blue-800 hover:dark:bg-gray-500 focus:ring-4 focus:outline-none  dark:bg-[#b5b9be]"
                       onClick={handleLogout}
                     >
                       Logout
@@ -130,8 +130,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-
-          <h2>{token ? "Loginned" : "Not Login"}</h2>
         </div>
       </div>
     </>
