@@ -80,7 +80,7 @@ const City = () => {
           )}
 
           <div className="flex justify-center items-center">
-            <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 px-3">
+            <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 px-3 mb-20">
               {loading ? (
                 <>
                   {Array.from({ length: 6 }).map((_, index) => (
