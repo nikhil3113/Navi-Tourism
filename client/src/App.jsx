@@ -8,6 +8,7 @@ import LocationDetail from "./pages/Location/LocationDetail";
 import AdminLogin from "./pages/AdminLogin";
 import UpdateLocation from "./pages/Location/UpdateLocation";
 import AddLocation from "./pages/Location/AddLocation";
+import TopLocation from "./pages/Location/TopLocation";
 
 const App = () => {
   return (
@@ -22,8 +23,7 @@ const App = () => {
         <Route path="/locationDetail/:id" element={<LocationDetail />} />
         <Route path="/location/update/:id" element={<UpdateLocation />} />
         <Route path="/location/add/:id" element={<AddLocation />} />
-
-
+        <Route path="/location/top" element={<TopLocation />} />
 
 
         <Route path="/admin/login" element={<AdminLogin />} />

@@ -1,75 +1,28 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Card from "../../components/Card";
 import NavBar from "../../components/NavBar";
 import { useDarkMode } from "../../DarkModeContext";
-import { MdOutlineAddToPhotos } from "react-icons/md";
 import { ShimmerPostItem } from "react-shimmer-effects";
 
-const Location = () => {
-  const { id } = useParams();
-  const token = localStorage.getItem("LocalPreference");
+const TopLocation = () => {
   const [location, setLocation] = useState([]);
   const { darkMode } = useDarkMode();
   const [loading, setLoading] = useState(true);
-  const [likedLocations, setLikedLocations] = useState(0);
-  // const[hasLiked, setHashLiked] = useState(false)
-  // const navigate = useNavigate();
+
   useEffect(() => {
     axios
-      // .get(`https://navi-tourism-backend.vercel.app/location/${id}`)
-      .get(`http://localhost:5000/location/${id}`)
+      .get("http://localhost:5000/location/sorted")
       .then((response) => {
+        // console.log(response.data.locations);
         setLocation(response.data.locations);
         setLoading(false);
-        // console.log(response.data.locatoins);
-        const storedLikes = localStorage.getItem("likedLocations");
-        if (storedLikes) {
-          setLikedLocations(JSON.parse(storedLikes));
-        }
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
       });
-  }, [id]);
-
-  const handleLikes = async (locationId) => {
-    try {
-      await axios.put(`http://localhost:5000/locationLikes/${locationId}`);
-      setLocation((prevLocation) =>
-        prevLocation.map((loc) =>
-          loc.id === locationId ? { ...loc, likes: loc.likes + 1 } : loc
-        )
-      );
-      setLikedLocations((prev) => {
-        const updatedLikes = { ...prev, [locationId]: true };
-        localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
-        return updatedLikes;
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleUnlike = async (locationId) => {
-    try {
-      await axios.put(`http://localhost:5000/locationUnlike/${locationId}`);
-      setLocation((prevLocation) =>
-        prevLocation.map((loc) =>
-          loc.id === locationId ? { ...loc, likes: loc.likes - 1 } : loc
-        )
-      );
-      setLikedLocations((prev) => {
-        const updatedLikes = { ...prev, [locationId]: false };
-        localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
-        return updatedLikes;
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, []);
 
   return (
     <>
@@ -77,21 +30,10 @@ const Location = () => {
         <div className="dark:bg-gray-800 min-h-screen">
           <NavBar />
           <div className="text-center text-5xl dark:text-white font-extrabold text-gray-800 mb-10 mt-10">
-            <h1>Location&apos;s To Visit</h1>
+            <h1> Top Location&apos;s</h1>
+        <h1 className="mt-3"> In Navi Mumbai</h1>
           </div>
-          {token ? (
-            <div className="flex justify-end items-start xl:mr-44 md:mr-44 mr-20">
-              <Link to={`/location/add/${id}`} className="flex">
-                <span className="text-3xl mr-2  dark:text-white font-extrabold">
-                  {" "}
-                  Add{" "}
-                </span>
-                <MdOutlineAddToPhotos className="text-4xl text-red-500 dark:text-red-700" />
-              </Link>
-            </div>
-          ) : (
-            ""
-          )}
+
           <div className="flex justify-center items-center">
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 px-3 mb-20">
               {loading ? (
@@ -126,9 +68,6 @@ const Location = () => {
                       DeleteButtonVisiblity={"hidden"}
                       likes={item.likes}
                       likesVisiblity={"visible"}
-                      handleLike={() => handleLikes(item.id)}
-                      handleUnlike={() => handleUnlike(item.id)}
-                      isLiked={likedLocations[item.id]}
                     />
                   </div>
                 ))
@@ -145,4 +84,4 @@ const Location = () => {
   );
 };
 
-export default Location;
+export default TopLocation;

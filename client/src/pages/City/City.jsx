@@ -23,7 +23,7 @@ const City = () => {
         setCity(response.data.city);
         setCityCount(response.data.city.length);
         setLoading(false);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -85,8 +85,8 @@ const City = () => {
                 <>
                   {Array.from({ length: 6 }).map((_, index) => (
                     // <CardLoader key={index} />
-                    <>
-                      <div className="gap-10 mt-10 ">
+                    <div key={index}>
+                      <div className="gap-10 mt-10 " >
                         <div className=" w-[350px]">
                           <ShimmerPostItem
                             card
@@ -96,11 +96,11 @@ const City = () => {
                             imageWidth={200}
                             imageHeight={5}
                             contentCenter
-                            key={index}
+                            
                           />
                         </div>
                       </div>
-                    </>
+                    </div>
                   ))}
                 </>
               ) : city && city.length > 0 ? (
@@ -113,6 +113,7 @@ const City = () => {
                       buttonName="Visit"
                       updateRoute={`/city/update/${item.id}`}
                       handleDelete={() => handleDelete(item.id)}
+                      likesVisiblity={"hidden"}
                     />
                   </div>
                 ))

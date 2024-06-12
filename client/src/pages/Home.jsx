@@ -5,11 +5,31 @@ import t2 from "../assets/t2.png";
 import t3 from "../assets/t3.png";
 import { useDarkMode } from "../DarkModeContext";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { ShimmerPostItem } from "react-shimmer-effects";
+import Card from "../components/Card";
 
 const Home = () => {
   const token = localStorage.getItem("LocalPreference");
   const { darkMode } = useDarkMode();
   const navigate = useNavigate();
+
+  const [location, setLocation] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/location/sorted")
+      .then((response) => {
+        // console.log(response.data.locations);
+        setLocation(response.data.locations);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -22,7 +42,7 @@ const Home = () => {
 
   return (
     <>
-      <div className={`${darkMode && "dark"} flex flex-col min-h-screen` }>
+      <div className={`${darkMode && "dark"} flex flex-col min-h-screen`}>
         <div className="dark:bg-gray-800 flex flex-col flex-grow">
           <NavBar />
           <div className="flex flex-col my-8">
@@ -78,6 +98,60 @@ const Home = () => {
               </div>
             </div>
 
+            <div className="flex-col justify-center items-center mt-10  bg-gray-100 dark:bg-transparent">
+              <div className="py-20">
+                <h1 className="text-4xl font-bold mb-5 text-center dark:text-white text-gray-800">
+                  Top Location&apos;s
+                </h1>
+                <div className="flex flex-col justify-end  items-center ">
+                  <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 px-3 mb-5">
+                    {loading ? (
+                      <>
+                        {Array.from({ length: 6 }).map((_, index) => (
+                          <div key={index}>
+                            <div className="gap-10 mt-10 ">
+                              <div className=" w-[350px]">
+                                <ShimmerPostItem
+                                  card
+                                  title
+                                  cta
+                                  imageType="thumbnail"
+                                  imageWidth={200}
+                                  imageHeight={5}
+                                  contentCenter
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                    ) : location && location.length > 0 ? (
+                      location.slice(0, 3).map((item) => (
+                        <div key={item.id}>
+                          <Card
+                            name={item.name}
+                            description={item.description}
+                            route={`/locationDetail/${item.id}`}
+                            buttonName="Visit"
+                            updateRoute={`/city/update/${item.id}`}
+                            handleDelete={""}
+                            likes={item.likes}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <Link to="/location/top">
+                    <button className=" cursor-pointer mt-5 mx-5 inline-flex items-center px-3 py-2 text-[16px] font-semibold text-center dark:text-black text-white bg-blue-700 rounded-lg hover:bg-blue-800 hover:dark:bg-gray-500 focus:ring-4 focus:outline-none  dark:bg-[#b5b9be]">
+                      Explore &gt;
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
             <div className="flex xl:flex-row md:flex-row flex-col justify-evenly items-center mt-20 dark:text-white">
               <div>
                 <img src={t1} alt="" className="max-sm:hidden" />
@@ -127,6 +201,17 @@ const Home = () => {
               </div>
               <div className="relative right-5">
                 <img src={t3} alt="icon3" />
+              </div>
+            </div>
+
+            <div className="flex xl:flex-row md:flex-row flex-col justify-evenly sm:items-end mt-20  ">
+              <div className="text-xl text-gray-800 font-semibold mb-3 dark:text-white dark:underline-offset-auto dark:underline">
+                <Link to="https://nikchavan.netlify.app" target="_blank">
+                 &gt; PortFolio
+                </Link>
+              </div>
+              <div className=" text-xl dark:text-white ">
+                <p>&copy;	Nikhil Chavan</p>
               </div>
             </div>
           </div>
