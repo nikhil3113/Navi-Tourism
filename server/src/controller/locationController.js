@@ -54,7 +54,7 @@ const locationController = {
 
             const city = await prisma.city.findUnique({
                 where: {
-                    id: id,
+                    id
                 },
             });
 
@@ -148,6 +148,76 @@ const locationController = {
         } catch (error) {
             res.status(500).json({ "Internal server error": error })
             console.log(error)
+        }
+    },
+
+    locationLikes: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const location = await prisma.location.findUnique({
+                where: {
+                    id: id
+                }
+            })
+
+            if (!location) {
+                return res.status(404).json({ message: "Location not found" });
+            }
+
+            const updatedLocation = await prisma.location.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    likes: location.likes + 1
+                }
+            })
+            res.status(200).json({ likes: updatedLocation.likes })
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ "Internal server error": error })
+        }
+    },
+
+    locationUnlike: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const location = await prisma.location.findUnique({
+                where: {
+                    id: id
+                }
+            })
+
+            if (!location) {
+                return res.status(404).json({ message: "Location not found" })
+            }
+
+            const updatedLocation = await prisma.location.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    likes: location.likes - 1
+                }
+            })
+            res.status(200).json({ likes: updatedLocation.likes })
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ "Internal server error": error })
+        }
+    },
+
+    locationSortedByLikes: async (req, res) => {
+        try {
+            const locations = await prisma.location.findMany({
+                orderBy: {
+                    likes: 'desc'
+                }
+            })
+            res.status(200).json({ locations })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ "Internal server error": error })
         }
     }
 

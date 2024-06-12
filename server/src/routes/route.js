@@ -15,12 +15,16 @@ router.put('/update/:id', cityController.updateCity)
 router.get('/:id', cityController.getCityById)
 
 //location   
-router.post('/location/add', locationController.createLocation)
+router.post('/location/add', locationController.createLocation) 
+router.get('/location/sorted', locationController.locationSortedByLikes)
 router.get('/location/:id', locationController.getLocation) //!id = cityId
 router.get('/locationDetails/:id', locationController.getLocationDetails)
 router.put('/location/update/:id', locationController.updateLocation)
 router.delete('/location/delete/:id', locationController.deleteLocation )
 router.get('/city/:id/locationCount', locationController.getLocationCountForCity)
+router.put('/locationLikes/:id', locationController.locationLikes)
+router.put('/locationUnlike/:id', locationController.locationUnlike)
+
 
 //user
 router.post('/signup', authController.signup)

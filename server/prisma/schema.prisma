@@ -31,4 +31,5 @@ model location {
   longitude     String?
   latitude      String?
   iframe        String
+  likes         Int?  @default(0)   
 }
