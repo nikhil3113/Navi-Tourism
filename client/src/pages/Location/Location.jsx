@@ -19,7 +19,7 @@ const Location = () => {
   useEffect(() => {
     axios
       // .get(`https://navi-tourism-backend.vercel.app/location/${id}`)
-      .get(`http://localhost:5000/location/${id}`)
+      .get(`https://navi-tourism-backend.vercel.app/location/${id}`)
       .then((response) => {
         setLocation(response.data.locations);
         setLoading(false);
@@ -37,7 +37,7 @@ const Location = () => {
 
   const handleLikes = async (locationId) => {
     try {
-      await axios.put(`http://localhost:5000/locationLikes/${locationId}`);
+      await axios.put(`https://navi-tourism-backend.vercel.app/locationLikes/${locationId}`);
       setLocation((prevLocation) =>
         prevLocation.map((loc) =>
           loc.id === locationId ? { ...loc, likes: loc.likes + 1 } : loc
@@ -55,7 +55,7 @@ const Location = () => {
 
   const handleUnlike = async (locationId) => {
     try {
-      await axios.put(`http://localhost:5000/locationUnlike/${locationId}`);
+      await axios.put(`https://navi-tourism-backend.vercel.app/locationUnlike/${locationId}`);
       setLocation((prevLocation) =>
         prevLocation.map((loc) =>
           loc.id === locationId ? { ...loc, likes: loc.likes - 1 } : loc

@@ -19,7 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/location/sorted")
+      .get("https://navi-tourism-backend.vercel.app/location/sorted")
       .then((response) => {
         // console.log(response.data.locations);
         setLocation(response.data.locations);
