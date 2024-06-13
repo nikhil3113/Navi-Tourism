@@ -5,7 +5,6 @@ import { MdOutlineDelete } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 
-
 const Card = ({
   name,
   description,
@@ -19,7 +18,6 @@ const Card = ({
   isLiked,
   handleLike,
   handleUnlike,
-  buttonVisiblity
 }) => {
   const token = localStorage.getItem("LocalPreference");
 
@@ -50,7 +48,9 @@ const Card = ({
             </p>
             <div className="flex justify-between items-end">
               <Link to={route}>
-                <button className={` mt-10 inline-flex items-center px-3 py-2 text-[16px] font-semibold text-center dark:text-black text-white bg-blue-700 rounded-lg hover:bg-blue-800 hover:dark:bg-gray-500 focus:ring-4 focus:outline-none  dark:bg-[#b5b9be] ${buttonVisiblity} `}>
+                <button
+                  className={` mt-10 inline-flex items-center px-3 py-2 text-[16px] font-semibold text-center dark:text-black text-white bg-blue-700 rounded-lg hover:bg-blue-800 hover:dark:bg-gray-500 focus:ring-4 focus:outline-none  dark:bg-[#b5b9be] `}
+                >
                   {buttonName}
                   <svg
                     className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
@@ -69,25 +69,19 @@ const Card = ({
                   </svg>
                 </button>
               </Link>
-              <div
-                className={`flex justify-center items-center text-xl ${likesVisiblity} `}
-              >
-                {/* {isLiked ? (
-                  <FaHeart className="mr-2 text-red-500 cursor-pointer" onClick={handleUnlike} />
-                ) : (
-                  <CiHeart className="mr-2 text-red-600 text-2xl cursor-pointer font-extrabold" onClick={handleLike} />
-                )} */}
-
+              <div className={`flex justify-center items-center text-xl  `}>
                 <FaHeart
-                  className={`mt-1 mr-1 cursor-pointer ${
+                  className={`mt-1 mr-1 cursor-pointer ${likesVisiblity} ${
                     isLiked
                       ? "transition ease-in-out delay-150  scale-110 text-red-500 dark:text-red-500 duration-300"
                       : "transition ease-out delay-150 text-white dark:text-[#b5b9be] "
                   }`}
-                  onClick={isLiked? handleUnlike: handleLike}
+                  onClick={isLiked ? handleUnlike : handleLike}
                 />
 
-                <p className="font-bold text-xl dark:text-gray-800 text-white relative top-[0.1rem]">{likes}</p>
+                <p className="font-bold text-xl dark:text-gray-800 text-white relative top-[0.1rem]">
+                  {likes}
+                </p>
               </div>
 
               {token ? (

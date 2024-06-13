@@ -152,7 +152,7 @@ const Location = () => {
                       updateRoute={`/location/update/${item.id}`}
                       DeleteButtonVisiblity={"hidden"}
                       likes={item.likes}
-                      likesVisiblity={"visible"}
+                      likesVisiblity="visible"
                       handleLike={() => handleLikes(item.id)}
                       handleUnlike={() => handleUnlike(item.id)}
                       isLiked={likedLocations[item.id]}

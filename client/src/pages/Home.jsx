@@ -209,6 +209,7 @@ const Home = () => {
                             handleLike={() => handleLikes(item.id)}
                             handleUnlike={() => handleUnlike(item.id)}
                             isLiked={likedLocations[item.id]}
+                            likesVisiblity="visible"
                           />
                         </div>
                       ))

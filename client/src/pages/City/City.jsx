@@ -10,9 +10,7 @@ import { ShimmerPostItem } from "react-shimmer-effects";
 const City = () => {
   const [city, setCity] = useState([]);
   const { darkMode } = useDarkMode();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [cityCount, setCityCount] = useState(0);
 
   const token = localStorage.getItem("LocalPreference");
   useEffect(() => {
@@ -21,7 +19,6 @@ const City = () => {
       // .get('http://localhost:5000/')
       .then((response) => {
         setCity(response.data.city);
-        setCityCount(response.data.city.length);
         setLoading(false);
         // console.log(response.data);
       })
@@ -86,7 +83,7 @@ const City = () => {
                   {Array.from({ length: 6 }).map((_, index) => (
                     // <CardLoader key={index} />
                     <div key={index}>
-                      <div className="gap-10 mt-10 " >
+                      <div className="gap-10 mt-10 ">
                         <div className=" w-[350px]">
                           <ShimmerPostItem
                             card
@@ -96,7 +93,6 @@ const City = () => {
                             imageWidth={200}
                             imageHeight={5}
                             contentCenter
-                            
                           />
                         </div>
                       </div>
@@ -111,9 +107,9 @@ const City = () => {
                       description={item.description}
                       route={`/location/${item.id}`}
                       buttonName="Visit"
+                      likesVisiblity={"hidden"}
                       updateRoute={`/city/update/${item.id}`}
                       handleDelete={() => handleDelete(item.id)}
-                      likesVisiblity="hidden"
                     />
                   </div>
                 ))
