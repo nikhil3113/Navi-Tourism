@@ -87,7 +87,7 @@ const Card = ({
                   onClick={isLiked? handleUnlike: handleLike}
                 />
 
-                <p className="font-bold text-xl dark:text-gray-800 text-white">{likes}</p>
+                <p className="font-bold text-xl dark:text-gray-800 text-white relative top-[0.1rem]">{likes}</p>
               </div>
 
               {token ? (
