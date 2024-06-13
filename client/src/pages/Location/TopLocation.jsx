@@ -9,6 +9,7 @@ const TopLocation = () => {
   const [location, setLocation] = useState([]);
   const { darkMode } = useDarkMode();
   const [loading, setLoading] = useState(true);
+  const [likedLocations, setLikedLocations] = useState(0);
 
   useEffect(() => {
     axios
@@ -16,13 +17,81 @@ const TopLocation = () => {
       .then((response) => {
         // console.log(response.data.locations);
         setLocation(response.data.locations);
+        const storedLikes = localStorage.getItem("likedLocations");
+        if (storedLikes) {
+          setLikedLocations(JSON.parse(storedLikes));
+        }
         setLoading(false);
+        
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
       });
   }, []);
+
+  const handleLikes = async (locationId) => {
+    // Optimistically update the UI
+    setLocation((prevLocations) =>
+      prevLocations.map((loc) =>
+        loc.id === locationId ? { ...loc, likes: loc.likes + 1 } : loc
+      )
+    );
+    setLikedLocations((prev) => {
+      const updatedLikes = { ...prev, [locationId]: true };
+      localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+      return updatedLikes;
+    });
+  
+    try {
+      await axios.put(`https://navi-tourism-backend.vercel.app/locationLikes/${locationId}`);
+    } catch (error) {
+      // Revert the UI update if the request fails
+      setLocation((prevLocations) =>
+        prevLocations.map((loc) =>
+          loc.id === locationId ? { ...loc, likes: loc.likes - 1 } : loc
+        )
+      );
+      setLikedLocations((prev) => {
+        const updatedLikes = { ...prev, [locationId]: false };
+        localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+        return updatedLikes;
+      });
+      console.log(error);
+    }
+  };
+  
+  const handleUnlike = async (locationId) => {
+    // Optimistically update the UI
+    setLocation((prevLocations) =>
+      prevLocations.map((loc) =>
+        loc.id === locationId ? { ...loc, likes: loc.likes - 1 } : loc
+      )
+    );
+    setLikedLocations((prev) => {
+      const updatedLikes = { ...prev, [locationId]: false };
+      localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+      return updatedLikes;
+    });
+  
+    try {
+      await axios.put(`https://navi-tourism-backend.vercel.app/locationUnlike/${locationId}`);
+    } catch (error) {
+      // Revert the UI update if the request fails
+      setLocation((prevLocations) =>
+        prevLocations.map((loc) =>
+          loc.id === locationId ? { ...loc, likes: loc.likes + 1 } : loc
+        )
+      );
+      setLikedLocations((prev) => {
+        const updatedLikes = { ...prev, [locationId]: true };
+        localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+        return updatedLikes;
+      });
+      console.log(error);
+    }
+  };
+
 
   return (
     <>
@@ -68,6 +137,9 @@ const TopLocation = () => {
                       DeleteButtonVisiblity={"hidden"}
                       likes={item.likes}
                       likesVisiblity={"visible"}
+                      handleLike={() => handleLikes(item.id)}
+                      handleUnlike={() => handleUnlike(item.id)}
+                      isLiked={likedLocations[item.id]}
                     />
                   </div>
                 ))

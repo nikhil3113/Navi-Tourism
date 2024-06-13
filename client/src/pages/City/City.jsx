@@ -113,7 +113,7 @@ const City = () => {
                       buttonName="Visit"
                       updateRoute={`/city/update/${item.id}`}
                       handleDelete={() => handleDelete(item.id)}
-                      likesVisiblity={"hidden"}
+                      likesVisiblity="hidden"
                     />
                   </div>
                 ))

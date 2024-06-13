@@ -72,20 +72,20 @@ const Card = ({
               <div
                 className={`flex justify-center items-center text-xl ${likesVisiblity} `}
               >
-                {isLiked ? (
+                {/* {isLiked ? (
                   <FaHeart className="mr-2 text-red-500 cursor-pointer" onClick={handleUnlike} />
                 ) : (
                   <CiHeart className="mr-2 text-red-600 text-2xl cursor-pointer font-extrabold" onClick={handleLike} />
-                )}
+                )} */}
 
-                {/* <FaHeart
+                <FaHeart
                   className={`mt-1 mr-1 cursor-pointer ${
                     isLiked
                       ? "transition ease-in-out delay-150  scale-110 text-red-500 dark:text-red-500 duration-300"
                       : "transition ease-out delay-150 text-white dark:text-[#b5b9be] "
                   }`}
-                  onClick={handleLike}
-                /> */}
+                  onClick={isLiked? handleUnlike: handleLike}
+                />
 
                 <p className="font-bold text-xl dark:text-gray-800 text-white">{likes}</p>
               </div>

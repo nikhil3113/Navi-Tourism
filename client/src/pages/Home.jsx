@@ -16,6 +16,7 @@ const Home = () => {
 
   const [location, setLocation] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [likedLocations, setLikedLocations] = useState(0);
 
   useEffect(() => {
     axios
@@ -23,7 +24,13 @@ const Home = () => {
       .then((response) => {
         // console.log(response.data.locations);
         setLocation(response.data.locations);
+        
+        const storedLikes = localStorage.getItem("likedLocations");
+        if (storedLikes) {
+          setLikedLocations(JSON.parse(storedLikes));
+        }
         setLoading(false);
+
       })
       .catch((error) => {
         console.log(error);
@@ -39,6 +46,69 @@ const Home = () => {
       console.log(error);
     }
   };
+
+  const handleLikes = async (locationId) => {
+    // Optimistically update the UI
+    setLocation((prevLocations) =>
+      prevLocations.map((loc) =>
+        loc.id === locationId ? { ...loc, likes: loc.likes + 1 } : loc
+      )
+    );
+    setLikedLocations((prev) => {
+      const updatedLikes = { ...prev, [locationId]: true };
+      localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+      return updatedLikes;
+    });
+  
+    try {
+      await axios.put(`https://navi-tourism-backend.vercel.app/locationLikes/${locationId}`);
+    } catch (error) {
+      // Revert the UI update if the request fails
+      setLocation((prevLocations) =>
+        prevLocations.map((loc) =>
+          loc.id === locationId ? { ...loc, likes: loc.likes - 1 } : loc
+        )
+      );
+      setLikedLocations((prev) => {
+        const updatedLikes = { ...prev, [locationId]: false };
+        localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+        return updatedLikes;
+      });
+      console.log(error);
+    }
+  };
+  
+  const handleUnlike = async (locationId) => {
+    // Optimistically update the UI
+    setLocation((prevLocations) =>
+      prevLocations.map((loc) =>
+        loc.id === locationId ? { ...loc, likes: loc.likes - 1 } : loc
+      )
+    );
+    setLikedLocations((prev) => {
+      const updatedLikes = { ...prev, [locationId]: false };
+      localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+      return updatedLikes;
+    });
+  
+    try {
+      await axios.put(`https://navi-tourism-backend.vercel.app/locationUnlike/${locationId}`);
+    } catch (error) {
+      // Revert the UI update if the request fails
+      setLocation((prevLocations) =>
+        prevLocations.map((loc) =>
+          loc.id === locationId ? { ...loc, likes: loc.likes + 1 } : loc
+        )
+      );
+      setLikedLocations((prev) => {
+        const updatedLikes = { ...prev, [locationId]: true };
+        localStorage.setItem("likedLocations", JSON.stringify(updatedLikes));
+        return updatedLikes;
+      });
+      console.log(error);
+    }
+  };
+
 
   return (
     <>
@@ -136,6 +206,9 @@ const Home = () => {
                             updateRoute={`/city/update/${item.id}`}
                             handleDelete={""}
                             likes={item.likes}
+                            handleLike={() => handleLikes(item.id)}
+                            handleUnlike={() => handleUnlike(item.id)}
+                            isLiked={likedLocations[item.id]}
                           />
                         </div>
                       ))
@@ -205,13 +278,13 @@ const Home = () => {
             </div>
 
             <div className="flex xl:flex-row md:flex-row flex-col justify-evenly sm:items-end mt-20  ">
-              <div className="text-xl text-gray-800 font-semibold mb-3 dark:text-white dark:underline-offset-auto dark:underline">
+              <div className="text-xl text-gray-800 font-semibold mb-3 dark:text-white relative top-2">
                 <Link to="https://nikchavan.netlify.app" target="_blank">
-                 &gt; PortFolio
+                  &gt; PortFolio
                 </Link>
               </div>
               <div className=" text-xl dark:text-white ">
-                <p>&copy;	Nikhil Chavan</p>
+                <p>&copy; Nikhil Chavan</p>
               </div>
             </div>
           </div>
