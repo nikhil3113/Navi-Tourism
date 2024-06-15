@@ -18,7 +18,7 @@ Navi Mumbai Tourism is a web application designed to help users explore and disc
 Before you begin, ensure you have met the following requirements:
 - Node.js (v14 or higher)
 - npm or yarn
-- PostgreSQL (for Prisma database)
+- MongoDB (for Prisma database)
 
 ### Step-by-Step Installation
 
