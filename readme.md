@@ -28,9 +28,7 @@ Before you begin, ensure you have met the following requirements:
    cd navi-mumbai-tourism   
 
 2. **Install Dependencies**
-    `npm install`
-    # or
-    `yarn install`
+    `npm install` or `yarn install`
 
 3. **Set Up Database**
     create the .env file and update with your MongoDB database connection string.
@@ -41,8 +39,6 @@ Before you begin, ensure you have met the following requirements:
     `npx prisma db push`
 
 5. **Start the Development Server**
-    `npm run dev`
-    # or
-    `yarn dev`
+    `npm run dev` or `yarn dev`
     The application should now be running at http://localhost:3000.
 
